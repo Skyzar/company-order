@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Company Order</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+        <link href="assets/css/all.min.css" rel="stylesheet">
+
+        <link href="assets/css/main.css" rel="stylesheet">
+        <script src="assets/js/vue.js"></script>
+    </head>
+    <body>
+        <div id="company-order-wrapper" class="noselect">
+            <div id="app">
+                <div class="main-title">
+                    Company Order
+                </div>
+
+                <div class="company-order-settings">
+
+                    <div class="co-settings-btn co-setting-green clickable" @click="add_eater">
+                        <i class="fas fa-user-plus"></i> Add Eater
+                    </div>
+
+                    <div class="co-settings-btn">
+                        Total Eaters: <strong>{{eaters.length}}</strong>
+                    </div>
+
+                    <div class="co-settings-btn">
+                        Fee Contributors: <strong>{{fee_contributors}}</strong>
+                    </div>
+                    <div class="co-settings-btn">
+                        Eaters Paid: <strong>{{eaters_paid}} / {{eaters.length}}</strong>
+                    </div>
+
+                </div>
+
+                <div class="pad-10">
+                    <div class="pay-progress" style="padding: 10px;">
+                        <div id="pay-progress-bar"></div>
+                        <div id="pay-progress-percentage"><strong>{{amount_paid}}€ / {{amount_due}}€ ({{percentage_paid}} %)</strong></div>
+                    </div>
+                </div>
+
+                <div id="delivery-fee">
+                    <div class="controls controls-currency">
+                        <input placeholder="__" type="number" v-model.number="fee">
+                        <label>Delivery Fee</label>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="table eater-table">
+                        <colgroup>
+                            <col style="width: 20%;">
+                            <col style="width: 15%;">
+                            <col style="width: 10%;">
+                            <col style="width: 15%;">
+                            <col style="width: 5%;">
+                            <col style="width: 10%;">
+                            <col style="width: 5%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Value</th>
+                                <th>Sharing Fee</th>
+                                <th>Fee</th>
+                                <th>Paid</th>
+                                <th>Total</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr is="eater-row" v-for="(eater, index) in eaters" :index="index" :eater="eater" @delete_eater="delete_eater(value)" :key="index"></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="no-eaters-info" v-if="eaters.length === 0">
+                    No Eaters
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/x-template" id="eater-row-template">
+            <tr>
+                <td>
+                    <div class="controls">
+                        <input type="text" placeholder="__" v-model="eater.name">
+                        <div class="bar"></div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="controls controls-currency">
+                        <input placeholder="__" type="number" v-model.number="eater.value">
+                        <div class="bar"></div>
+                    </div>
+                </td>
+
+                <td>
+                    <label class="label-cbx label-cbx-td">
+                        <input v-model="eater.contributing" type="checkbox" class="invisible">
+                        <div class="checkbox">
+                            <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                <polyline points="4 11 8 15 16 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+                </td>
+
+                <td class="ta-right">
+                    <strong>{{fee}}€</strong>
+                </td>
+
+                <td>
+                    <label class="label-cbx label-cbx-td">
+                        <input v-model="eater.paid" type="checkbox" class="invisible">
+                        <div class="checkbox">
+                            <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                <polyline points="4 11 8 15 16 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+                </td>
+
+                <td class="ta-right">
+                    <strong>{{total}}€</strong>
+                </td>
+
+                <td>
+                    <div @click="delete_eater(index)" class="co-setting-delete-eater">
+                        <i class="fas fa-user-minus"></i>
+                    </div>
+                </td>
+            </tr>
+        </script>
+
+        <script src="assets/js/co.vue.js"></script>
+
+    </body>
+</html>

@@ -1,8 +1,24 @@
-# Company Order
+# company-order-new
 
-Order food for you and your colleagues (or in general other people) and track who paid what and how much.
+## Project setup
+```
+npm install
+```
 
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
+### Compiles and minifies for production
+```
+npm run build
+```
 
-### Getting Started
-No prerequisites needed. Download or clone the project and open the ´index.html´.
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

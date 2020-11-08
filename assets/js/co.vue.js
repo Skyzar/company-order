@@ -6,16 +6,16 @@ Vue.component('eater-row', {
     },
     methods: {
         delete_eater(index) {
-            company_order.delete_eater(index);
+            co_app.delete_eater(index);
         }
     },
     computed: {
         total() {
-            return this.eater.value + (this.eater.contributing ? company_order.shared_fee : 0);
+            return this.eater.value + (this.eater.contributing ? co_app.shared_fee : 0);
         },
         fee() {
             if(this.eater.contributing){
-                return company_order.shared_fee;
+                return co_app.shared_fee;
             }
             else {
                 return parseFloat('0,00').toFixed(2);
@@ -24,7 +24,7 @@ Vue.component('eater-row', {
     }
 });
 
-const company_order = new Vue({
+const co_app = new Vue({
     el: '#app',
     data: {
         fee: 0,
@@ -37,6 +37,7 @@ const company_order = new Vue({
         add_eater: function () {
             this.eaters.push({
                 name: '',
+                items: [],
                 value: null,
                 contributing: false,
                 total: null,
@@ -55,7 +56,7 @@ const company_order = new Vue({
         },
         amount_paid() {
             return this.to_currency_value(this.eaters.reduce(function (amount_paid, eater) {
-                return amount_paid + (eater.paid && eater.value ? eater.value : 0) + (eater.contributing && eater.paid ? company_order.shared_fee : 0);
+                return amount_paid + (eater.paid && eater.value ? eater.value : 0) + (eater.contributing && eater.paid ? this.shared_fee : 0);
             }, 0));
         },
         percentage_paid() {

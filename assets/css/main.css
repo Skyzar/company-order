@@ -44,7 +44,7 @@ body {
     max-width: 1000px;
     border-radius: 3px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
-    margin: 200px auto;
+    margin: 12vh auto 0 auto;
 }
 
 .company-order-settings {
@@ -83,6 +83,27 @@ body {
 
 #app {
     padding: 10px;
+}
+
+.eater-items-button {
+    border: 2px solid #EFEFEF;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 150ms ease-in-out;
+}
+
+.eater-items-button:hover {
+    background-color: #EFEFEF;
+    cursor: pointer;
+}
+
+.eater-items-button:active {
+    background-color: #AFAFAF;
+}
+
+.eater-items-button:focus {
+    border: 2px solid #EFEFEF;
 }
 
 .co-setting-delete-eater {

@@ -1,164 +1,229 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Company Order</title>
+        <title>Company Order</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
-          rel="stylesheet">
-    <link href="assets/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+              rel="stylesheet">
+        <link href="assets/css/all.min.css" rel="stylesheet">
 
-    <link href="assets/css/main.css" rel="stylesheet">
-    <script src="assets/js/vue.js"></script>
-</head>
-<body>
-<div id="company-order-wrapper" class="noselect">
-    <div id="app">
-        <div class="main-title">
-            Company Order
-        </div>
+        <link href="assets/css/main.css" rel="stylesheet">
+        <script src="assets/js/vue.js"></script>
+    </head>
+    <body class="dark">
+        <div id="company-order-wrapper" class="noselect">
+            <div id="app">
 
-        <div class="company-order-settings">
+                <div class="grid-row five">
 
-            <div class="co-settings-btn co-setting-green clickable" @click="add_eater">
-                <i class="fas fa-user-plus"></i> Add Eater
-            </div>
+                    <div class="grid-row-item clickable" @click="add_eater">
+                        <div class="grid-row-item-label">Add Eater</div>
+                        <i class="fas fa-user-plus"></i>
+                    </div>
 
-            <div class="co-settings-btn">
-                Total Eaters: <strong>{{eaters.length}}</strong>
-            </div>
+                    <div class="grid-row-item">
+                        <div class="grid-row-item-label">Delivery Fee</div>
+                        <input class="clean ta-right" type="number" v-model.number="fee">
+                    </div>
 
-            <div class="co-settings-btn">
-                Fee Contributors: <strong>{{fee_contributors}}</strong>
-            </div>
-            <div class="co-settings-btn">
-                Eaters Paid: <strong>{{eaters_paid}} / {{eaters.length}}</strong>
-            </div>
+                    <div class="grid-row-item">
+                        <div class="grid-row-item-label">Total Eaters</div>
+                        <strong>{{ eaters.length }}</strong>
+                    </div>
 
-        </div>
+                    <div class="grid-row-item">
+                        <div class="grid-row-item-label">Fee Contributors</div>
+                        <strong>{{ fee_contributors }} / {{ eaters.length }}</strong>
+                    </div>
 
-        <div class="pad-10">
-            <div class="pay-progress" style="padding: 10px;">
-                <div id="pay-progress-bar"></div>
-                <div id="pay-progress-percentage"><strong>{{amount_paid}}€ / {{amount_due}}€ ({{percentage_paid}}
-                    %)</strong></div>
-            </div>
-        </div>
+                    <div class="grid-row-item">
+                        <div class="grid-row-item-label">Eaters Paid</div>
+                        <strong>{{ eaters_paid }} / {{ eaters.length }}</strong>
+                    </div>
 
-        <div id="delivery-fee">
-            <div class="controls controls-currency">
-                <input placeholder="__" type="number" v-model.number="fee">
-                <label>Delivery Fee</label>
-                <div class="bar"></div>
-            </div>
-        </div>
+                    <div class="grid-row-item clickable" @click="switch_theme">
+                        <div class="grid-row-item-label">Switch Theme</div>
+                        <strong>{{ current_theme }}</strong>
+                    </div>
 
-        <div class="table-scroll">
-            <table class="table eater-table">
-                <colgroup>
-                    <col style="width: 15%;">
-                    <col style="width: 5%;">
-                    <col style="width: 15%;">
-                    <col style="width: 10%;">
-                    <col style="width: 15%;">
-                    <col style="width: 5%;">
-                    <col style="width: 10%;">
-                    <col style="width: 5%;">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Items</th>
-                    <th>Value</th>
-                    <th>Sharing Fee</th>
-                    <th>Fee</th>
-                    <th>Paid</th>
-                    <th>Total</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr is="eater-row" v-for="(eater, index) in eaters" :index="index" :eater="eater"
-                    @delete_eater="delete_eater(value)" :key="index"></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="no-eaters-info" v-if="eaters.length === 0">
-            No Eaters
-        </div>
-    </div>
-</div>
-
-<!-- EATER ROW TEMPLATE -->
-<script type="text/x-template" id="eater-row-template">
-    <tr>
-        <td>
-            <div class="controls">
-                <input type="text" placeholder="__" v-model="eater.name">
-                <div class="bar"></div>
-            </div>
-        </td>
-
-        <td class="ta-center">
-            <button class="eater-items-button">
-                {{ eater.items.length }}
-            </button>
-        </td>
-
-        <td>
-            <div class="controls controls-currency">
-                <input placeholder="__" type="number" v-model.number="eater.value">
-                <div class="bar"></div>
-            </div>
-        </td>
-
-        <td>
-            <label class="label-cbx label-cbx-td">
-                <input v-model="eater.contributing" type="checkbox" class="invisible">
-                <div class="checkbox">
-                    <svg width="20px" height="20px" viewBox="0 0 20 20">
-                        <polyline points="4 11 8 15 16 6"></polyline>
-                    </svg>
                 </div>
-            </label>
-        </td>
 
-        <td class="ta-right">
-            <strong>{{ fee }}€</strong>
-        </td>
-
-        <td>
-            <label class="label-cbx label-cbx-td">
-                <input v-model="eater.paid" type="checkbox" class="invisible">
-                <div class="checkbox">
-                    <svg width="20px" height="20px" viewBox="0 0 20 20">
-                        <polyline points="4 11 8 15 16 6"></polyline>
-                    </svg>
+                <div class="grid-row one relative">
+                    <div class="grid-row-item pay-progress">
+                        <div class="grid-row-item-label">Pay Progress</div>
+                        <strong>{{ amount_paid }}€ / {{ amount_due }}€ ( {{ percentage_paid }} %)</strong>
+                    </div>
+                    <div id="shadow-pay-progress-wrapper">
+                        <div class="grid-row-item shadow-pay-progress">
+                            <div class="grid-row one">
+                                <div class="grid-row-item-label">Pay Progress</div>
+                                <strong>{{ amount_paid }}€ / {{ amount_due }}€ ( {{ percentage_paid }} %)</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </label>
-        </td>
 
-        <td class="ta-right">
-            <strong>{{ total }}€</strong>
-        </td>
+                <div class="table-scroll">
+                    <table class="table eater-table">
+                        <colgroup>
+                            <col style="width: 25%;">
+                            <col style="width: 5%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 5%;">
+                            <col style="width: 10%;">
+                            <col style="width: 5%;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Items</th>
+                                <th>Value</th>
+                                <th>Fee</th>
+                                <th>Sharing Fee</th>
+                                <th>Paid</th>
+                                <th>Total</th>
+                                <th><i class="fas fa-trash"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr is="eater-row" v-for="(eater, index) in eaters" :index="index" :eater="eater" :key="'eater-' + index"></tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <td>
-            <div @click="delete_eater(index)" class="co-setting-delete-eater">
-                <i class="fas fa-user-minus"></i>
+                <div class="no-data-info" v-if="eaters.length === 0">
+                    No Eaters
+                </div>
+
+                <transition name="fade">
+                    <div v-if="eater_items_modal" class="modal-background" @click.self="eater_items_modal = false">
+                        <div class="modal-container">
+                            <div class="modal-close-x" @click.self="eater_items_modal = false">X</div>
+                            <div class="modal-title">
+                                {{ selected_eater.name }}'s Food List
+                            </div>
+                            <div class="modal-content">
+
+                                <div class="grid-row two">
+
+                                    <div class="grid-row-item clickable" @click="create_eater_item">
+                                        <div class="grid-row-item-label">Add Item</div>
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+
+                                    <div class="grid-row-item">
+                                        <div class="grid-row-item-label">Items</div>
+                                        <strong>{{ selected_eater.items.length }}</strong>
+                                    </div>
+
+                                </div>
+
+                                <table class="table eater-table">
+                                    <colgroup>
+                                        <col style="width: 10%;">
+                                        <col style="width: 40%;">
+                                        <col style="width: 40%;">
+                                        <col style="width: 10%;">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th><i class="fas fa-trash"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, key) in selected_eater.items">
+                                            <td>
+                                                <div class="ta-center">
+                                                    {{ key + 1 }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input class="clean" type="text" v-model="item.name">
+                                            </td>
+                                            <td>
+                                                <input class="clean controls-currency ta-right" type="number" v-model.number="item.price">
+                                            </td>
+                                            <td @click="delete_item(index)" class="delete">
+                                                <i class="fas fa-trash"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="no-data-info" v-if="selected_eater.items.length === 0">
+                                    No Items
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
+
             </div>
-        </td>
-    </tr>
-</script>
+        </div>
 
-<script type="text/x-template" id="eater-items-template">
+        <!-- EATER ROW TEMPLATE -->
+        <script type="text/x-template" id="eater-row-template">
+            <tr>
+                <td>
+                    <input class="clean" type="text" v-model="eater.name">
+                </td>
 
-</script>
+                <td class="ta-center td-clickable" @click="toggle_eater_items_modal(true)">
+                    <strong>{{ eater.items.length }}</strong>
+                </td>
 
-<script src="assets/js/co.vue.js"></script>
+                <td>
+                    <div class="ta-right">
+                        {{ eater_value }}€
+                    </div>
+                </td>
 
-</body>
+                <td class="ta-right">
+                    {{ fee }}€
+                </td>
+
+
+                <td>
+                    <label class="label-cbx label-cbx-td">
+                        <input v-model="eater.contributing" type="checkbox" class="invisible">
+                        <div class="checkbox">
+                            <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                <polyline points="4 11 8 15 16 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+                </td>
+
+                <td>
+                    <label class="label-cbx label-cbx-td">
+                        <input v-model="eater.paid" type="checkbox" class="invisible">
+                        <div class="checkbox">
+                            <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                <polyline points="4 11 8 15 16 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+                </td>
+
+                <td class="ta-right">
+                    <strong>{{ total }}€</strong>
+                </td>
+
+                <td @click="delete_eater(index)" class="delete">
+                    <i class="fas fa-trash"></i>
+                </td>
+            </tr>
+        </script>
+
+        <script src="assets/js/co.vue.js"></script>
+
+    </body>
 </html>

@@ -1,0 +1,114 @@
+body.light * {
+    color: #333333;
+}
+
+body.light {
+    background: #F4F4F4;
+}
+
+body.light #company-order-wrapper {
+    background: #FFFFFF;
+}
+
+body.light .grid-row-item {
+    border: 2px solid #CCCCCC;
+}
+
+body.light .grid-row-item:focus-within {
+    border-color: #5D695A;
+}
+
+body.light .grid-row-item:focus-within > .grid-row-item-label {
+    color: #5D695A;
+}
+
+body.light .grid-row-item-label {
+    color: #5D695A;
+    background-color: #FFFFFF;
+}
+
+body.light .grid-row-item.clickable:hover {
+    border-color: #5D695A;
+}
+
+body.light .grid-row-item.clickable:hover > .grid-row-item-label,
+body.light .grid-row-item.clickable:hover > i {
+    color: #5D695A;
+}
+
+body.light .td-clickable:hover {
+    background-color: #E7F1D4 !important;
+}
+
+body.light .table {
+    border: 2px solid #CCCCCC;
+}
+
+body.light .table td:focus-within {
+    background: #E7F1D4 !important;
+}
+
+body.light .table > thead > tr {
+    border-bottom: 2px solid #CCCCCC;
+}
+
+body.light .table > thead > tr > th {
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+}
+
+body.light .table > tbody > tr > td {
+    border: 1px solid #CCCCCC;
+}
+
+body.light .table > tbody > tr:nth-child(2n) > td {
+    background: #F4F4F4;
+}
+
+body.light td.delete:hover {
+    background-color: #FEC9C9 !important;
+}
+
+body.light .no-data-info {
+    color: #CCCCCC;
+    background-color: #F4F4F4;
+    border-right: 2px solid #CCCCCC;
+    border-bottom: 2px solid #CCCCCC;
+    border-left: 2px solid #CCCCCC;
+}
+
+body.light .label-cbx input:checked + .checkbox {
+    border-color: #5D695A;
+}
+
+body.light .label-cbx input:checked + .checkbox svg path {
+    fill: #5D695A;
+}
+
+body.light .label-cbx input:checked + .checkbox svg polyline {
+    stroke-dashoffset: 0;
+    stroke: #5D695A;
+}
+
+body.light .label-cbx .checkbox {
+    border: 2px solid #CCCCCC;
+}
+
+body.light .modal-container {
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+}
+
+body.light .modal-title {
+    border-bottom: 2px solid #CCCCCC;
+}
+
+body.light .shadow-pay-progress {
+    border-color: #5D695A;
+    background: #E7F1D4;
+}
+
+body.light .shadow-pay-progress > .grid-row > .grid-row-item-label {
+    background: #E7F1D4;
+}

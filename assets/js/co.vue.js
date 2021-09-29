@@ -33,6 +33,7 @@ Vue.component('eater-row', {
 const co_app = new Vue({
     el: '#app',
     data: {
+        order_name: '',
         current_theme: 'Dark',
         fee: null,
         eater_items_modal: false,
